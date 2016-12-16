@@ -1,0 +1,2 @@
+C:\Sandrine\MobileApps\FlashQuizMaster\FlashQuizMaster\FlashQuizMaster.WinPhone\FlashQuizMaster.WinPhone.csproj;x86
+C:\Sandrine\MobileApps\FlashQuizMaster\FlashQuizMaster\FlashQuizMaster\FlashQuizMaster.csproj;neutral

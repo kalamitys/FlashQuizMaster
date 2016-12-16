@@ -125,13 +125,14 @@ namespace FlashQuizMaster.Pages
             {
                 Children =
                 {
+                     btnOk, btnCancel,
                     lblChapter,
                     lblQuestion,entryQuestion,
                     lblCorrectAnswer, entryCorrectAnswer,
                     lblFakeAnwser1, entryFakeAnswer1,
                     lblFakeAnwser2, entryFakeAnswer2,
                     lblFakeAnwser3, entryFakeAnswer3,
-                    btnOk, btnCancel
+                   
                 },
                 BackgroundColor = Color.White
             };

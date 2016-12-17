@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using FlashQuizMaster.ViewModels;
+using System.Threading.Tasks;
 
 namespace FlashQuizMaster.Pages
 {
@@ -38,13 +34,30 @@ namespace FlashQuizMaster.Pages
             
             btnOk.Clicked += async (sender, args) =>
             {
-                chapterVM.SaveChapterVM();
-                await DisplayAlert("Information", "Le chapitre:" + chapterVM.ChapterName + " a été ajouté!", "OK");
-                //Le modal ne marche pas bien car le retour à la page precedente ne rafraichis pas les données: A revoir
-                //await Navigation.PopModalAsync(); 
-                await Navigation.PushAsync(new ChapterDisplay(curTopic));//SDI:We go back to the full chapter list
+                if(await ValidateAsync(chapterVM.ChapterName))
+                {
+                    chapterVM.SaveChapterVM();
+                    await DisplayAlert("Information", "Le chapitre:" + chapterVM.ChapterName + " a été ajouté!", "OK");
+                    //Le modal ne marche pas bien car le retour à la page precedente ne rafraichis pas les données: A revoir
+                    //await Navigation.PopModalAsync(); 
+                    await Navigation.PushAsync(new ChapterDisplay(curTopic));//SDI:We go back to the full chapter list
+                }
+             
             };
 
+            async Task<bool> ValidateAsync(string loginName)
+            {
+                if (string.IsNullOrWhiteSpace(loginName))
+                {
+                    await DisplayAlert("Information", "Le chapitre: invalid", "OK");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+
+            }
             Button btnCancel = new Button()
             {
                 Text = "Annuler",
@@ -72,5 +85,7 @@ namespace FlashQuizMaster.Pages
             this.Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 5);
             this.BackgroundColor = Color.Gray;
         }
+
+         
     }
 }

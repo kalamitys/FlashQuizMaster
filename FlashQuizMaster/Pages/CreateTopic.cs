@@ -6,6 +6,7 @@ using System.Text;
 using FlashQuizMaster.ViewModels;
 
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace FlashQuizMaster.Pages
 {
@@ -38,12 +39,33 @@ namespace FlashQuizMaster.Pages
 
             btnOk.Clicked += async (sender, args) =>
             {
-                topicVM.SaveTopicVM();
-                await DisplayAlert("Information", "Le sujet:" + topicVM.TopicName + " a été ajouté!", "OK");
-                //Le modal ne marche pas bien car le retour à la page precedente ne rafraichis pas les données: A revoir
-                //await Navigation.PopModalAsync(); 
-                await Navigation.PushAsync(new TopicDisplay(curUserVM));//SDI:We go back to the full topics list
+
+                if (await ValidateAsync(topicVM.TopicName))
+                {
+                    topicVM.SaveTopicVM();
+                    await DisplayAlert("Information", "Le sujet:" + topicVM.TopicName + " a été ajouté!", "OK");
+                    //Le modal ne marche pas bien car le retour à la page precedente ne rafraichis pas les données: A revoir
+                    //await Navigation.PopModalAsync(); 
+                    await Navigation.PushAsync(new TopicDisplay(curUserVM));//SDI:We go back to the full topics list
+                }
             };
+
+            
+
+            async Task<bool> ValidateAsync(string name)
+            {
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    await DisplayAlert("Information", "Le sujet: invalid", "OK");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+
+            }
+
 
             var stackLayout = new StackLayout
             {

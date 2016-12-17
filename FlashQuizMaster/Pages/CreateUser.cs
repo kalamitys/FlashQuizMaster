@@ -1,10 +1,7 @@
-﻿using FlashQuizMaster.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using FlashQuizMaster.ViewModels;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace FlashQuizMaster.Pages
 {
@@ -38,9 +35,14 @@ namespace FlashQuizMaster.Pages
 
             btnOk.Clicked += async (sender, args) =>
             {
-                UserVM.SaveUserVM();              
-                await DisplayAlert("Information", "L'utilisateur:" + UserVM.LoginName + " a été ajouté!", "OK");
-                await Navigation.PushAsync(new Connect());//SDI:We go back to the full user list
+                var valid =await ValidateAsync(UserVM.LoginName);
+                if(valid)
+                {
+                    UserVM.SaveUserVM();
+                    await DisplayAlert("Information", "L'utilisateur:" + UserVM.LoginName + " a été ajouté!", "OK");
+                    await Navigation.PushAsync(new Connect());//SDI:We go back to the full user list
+                }
+             
             };
 
             var stackLayout = new StackLayout
@@ -59,6 +61,20 @@ namespace FlashQuizMaster.Pages
             this.Content = stackLayout;
             this.Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 5);
             this.BackgroundColor = Color.Gray;
+
+        }
+
+        public async Task<bool>  ValidateAsync(string loginName)
+        {
+            if (string.IsNullOrWhiteSpace(loginName))
+            {
+                await DisplayAlert("Information", "L'utilisateur: invalid", "OK");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
 
         }
     }

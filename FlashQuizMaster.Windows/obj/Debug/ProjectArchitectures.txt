@@ -1,2 +1,0 @@
-C:\Sandrine\MobileApps\FlashQuizMaster\FlashQuizMaster\FlashQuizMaster.Windows\FlashQuizMaster.Windows.csproj;neutral
-C:\Sandrine\MobileApps\FlashQuizMaster\FlashQuizMaster\FlashQuizMaster\FlashQuizMaster.csproj;neutral
